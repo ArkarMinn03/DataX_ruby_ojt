@@ -1,0 +1,45 @@
+ta:
+  labels:
+    common:
+      name: "பெயர்"
+
+    user:
+      first_name: "பெயர்"
+      last_name: "குடும்ப பெயர்"
+      email: "மின்னஞ்சல்"
+      encrypted_password: "கடவுச்சொல்"
+      about_me: "சுயசரிதை"
+      profile: "சுயவிவரம்"
+      gender: "பாலினம்"
+
+    skill:
+      level: "நிலை"
+      duration: "கால அளவு"
+
+    education:
+      education_type: "கல்வி வகை"
+      description: "விளக்கம்"
+      start_date: "தொடக்க தேதி"
+      end_date: "இறுதி தேதி"
+
+    project:
+      title: "தலைப்பு"
+      link: "இணைப்பு"
+      description: "விளக்கம்"
+      image: "படம்"
+      language: "மொழி"
+      user_id: "பயனர்"
+      category_id: "Project வகை"
+      document: "ஆவணம்"
+
+  messages:
+    common:
+      create_success: "%{data} வெற்றிகரமாக உருவாக்கப்பட்டது."
+      update_success: "%{data} வெற்றிகரமாக புதுப்பிக்கப்பட்டது."
+      destroy_success: "%{data} வெற்றிகரமாக அழிக்கப்பட்டது."
+
+  buttons:
+    common:
+      create: "Create %{data}"
+      update: "Update %{data}"
+      delete: "Delete %{data}"

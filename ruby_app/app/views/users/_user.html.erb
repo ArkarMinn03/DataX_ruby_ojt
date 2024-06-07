@@ -1,0 +1,38 @@
+<div id="<%= dom_id user %>" class="row mb-2">
+  <% if viewUserDetail.present? %>
+    <div class="alert alert-info"></div>
+  <% end %>
+  <div class="col-4">
+    <div style="width: 200px; height: auto;">
+      <% if user.profile.present?  %>
+        <%= image_tag user.profile, style: "width:100px; border-radius:10%" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col">
+    <div class="">
+      <div class="mb-2">
+        <span class="fw-bold"><%= t('labels.user.first_name') %> : </span>
+        <%= user.first_name %>
+      </div>
+      <div class="mb-2">
+        <span class="fw-bold"><%= t('labels.user.last_name') %> : </span>
+        <%= user.last_name %>
+      </div>
+      <div class="mb-2">
+        <span class="fw-bold"><%= t('labels.user.email') %> : </span>
+        <%= user.email %>
+      </div>
+      <div class="mb-2">
+        <span class="fw-bold"><%= t('labels.user.gender_type') %> : </span>
+        <%= user.gender_type %>
+      </div>
+      <div class="mb-2 d-flex align-items-center">
+        <span class="fw-bold"><%= t('labels.user.about_me') %> : </span>
+        <span class="d-inline-block text-truncate ms-1" style="max-width: 130px;">
+          <%= user.about_me %>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

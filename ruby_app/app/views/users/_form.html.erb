@@ -1,0 +1,90 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label t('labels.user.first_name'), class: "form-label" %>
+    <%= form.text_field :first_name, class: "form-control"  %>
+    <% if flash[:errors].present? && flash[:errors]["first_name"].present? %>
+      <% flash[:errors]["first_name"].each do |error| %>
+        <span class="text-danger"><%= error %></span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label t('labels.user.last_name'), class: "form-label" %>
+    <%= form.text_field :last_name, class: "form-control" %>
+    <% if flash[:errors].present? && flash[:errors]["last_name"].present? %>
+      <% flash[:errors]["last_name"].each do |error| %>
+        <span class="text-danger"><%= error %></span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label t('labels.user.email'), class: "form-label" %>
+    <%= form.text_field :email, class: "form-control" %>
+    <% if flash[:errors].present? && flash[:errors]["email"].present? %>
+      <% flash[:errors]["email"].each do |error| %>
+        <span class="text-danger"><%= error %></span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if local_assigns[:form_type] == :new %>
+    <div class="mb-3">
+      <%= form.label t('labels.user.encrypted_password'), class: "form-label" %>
+      <%= form.password_field :encrypted_password, class: "form-control" %>
+      <% if flash[:errors].present? && flash[:errors]["encrypted_password"].present? %>
+        <% flash[:errors]["encrypted_password"].each do |error| %>
+          <span class="text-danger"><%= error %></span>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label t('labels.user.gender'), class: "form-label" %>
+    <div class="form-check d-inline-block">
+      <%= form.radio_button :gender, 0, id: 'male' %>
+      <label for="male">Male</label>
+    </div>
+    <div class="form-check d-inline-block">
+      <%= form.radio_button :gender, 1, id: 'female' %>
+      <label for="female">Female</label>
+    </div>
+    <% if flash[:errors].present? && flash[:errors]["gender"].present? %>
+      <% flash[:errors]["gender"].each do |error| %>
+        <span class="text-danger"><%= error %></span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label t('labels.user.about_me'), class: "form-label" %>
+    <%= form.text_area :about_me, class: "form-control" %>
+    <% if flash[:errors].present? && flash[:errors]["about_me"].present? %>
+      <% flash[:errors]["about_me"].each do |error| %>
+        <span class="text-danger"><%= error %></span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if local_assigns[:form_type] == :new %>
+    <div class="mb-3">
+      <%= form.label t('labels.user.profile'), class: "form-label" %>
+      <%= form.file_field :profile, class: "form-control" %>
+      <% if flash[:errors].present? && flash[:errors]["profile"].present? %>
+        <% flash[:errors]["profile"].each do |error| %>
+          <span class="text-danger"><%= error %></span>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="text-center">
+    <% if local_assigns[:form_type] == :new %>
+      <%= form.submit t('buttons.common.create', data: "User"), class: "btn btn-success" %>
+    <% else %>
+      <%= form.submit t('buttons.common.update', data: "User"), class: "btn btn-success" %>
+    <% end %>
+  </div>
+<% end %>

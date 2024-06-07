@@ -1,0 +1,22 @@
+<div id="users" class="container p-3 mt-3">
+  <% if notice.present? %>
+    <div class="alert alert-info mx-auto" style="width: 600px;">
+      <%= notice %>
+    </div>
+  <% end %>
+  <h3>User List</h3>
+  <div class="row">
+    <% @users.each do |user| %>
+      <div class="col-4 p-3">
+        <div class="card bg-light">
+          <div class="card-body">
+            <%= render partial: "user", locals: { user: user, viewUserDetail: false } %>
+            <div class="float-end">
+              <%= link_to "View", user, class: "btn btn-sm btn-secondary px-3 me-2" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

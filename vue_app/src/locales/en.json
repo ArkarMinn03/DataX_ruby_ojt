@@ -1,0 +1,66 @@
+{
+  "labels": {
+    "common": {
+      "name": "Name",
+      "created_at": "Created At",
+      "updated_at": "Updated At"
+    },
+    "user": {
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "encrypted_password": "Password",
+      "about_me": "About Me",
+      "profile": "Profile",
+      "gender": "Gender"
+    },
+    "skill": {
+      "level": "Level",
+      "duration": "Duration"
+    },
+    "education": {
+      "education_type": "Education Type",
+      "description": "Description",
+      "start_date": "Start Date",
+      "end_date": "End Date"
+    },
+    "project": {
+      "title": "Project Title",
+      "link": "Project Link",
+      "description": "Description",
+      "image": "Cover Image",
+      "language": "Language",
+      "user_id": "User",
+      "category_id": "Category",
+      "document": "Document"
+    }
+  },
+  "messages": {
+    "common": {
+      "create_success": "%{msg} was successfully created.",
+      "update_success": "%{msg} was successfully updated.",
+      "destroy_success": "%{msg} was successfully deleted."
+    }
+  },
+  "buttons": {
+    "common": {
+      "create": "Create",
+      "update": "Update",
+      "delete": "Delete",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "view_list": "View List",
+      "add_new": "Add New"
+    }
+  },
+  "headers": {
+    "register_form": "{msg} Registration Form",
+    "update_form": "{msg} Information Update Form",
+    "list": "{msg} List",
+    "detail": "{msg} Detail Information"
+  },
+  "navigations": {
+    "home": "Home",
+    "user": "User"
+  }
+}

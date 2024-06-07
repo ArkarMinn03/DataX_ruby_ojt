@@ -1,0 +1,14 @@
+<div class="container p-3 mt-3" style="800px;">
+  <p style="color: green"><%= notice %></p>
+  <h4 class="text-center">User Profile</h4>
+  <div class="w-50 mx-auto mt-4 border border-dark-50 rounded p-3">
+    <%= render partial: "user", locals: { user: @user, viewUserDetail: true } %>
+  </div>
+</div>
+
+<div>
+  <%= link_to "Edit this user", edit_user_path(@user) %> |
+  <%= link_to "Back to users", users_path %>
+
+  <%= button_to t('buttons.common.delete', data: "User"), @user, method: :delete %>
+</div>

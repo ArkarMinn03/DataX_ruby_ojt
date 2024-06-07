@@ -1,0 +1,6 @@
+development:
+  web_name: DataX_OJT
+  description: This is DATAX ojt project
+  #web_language can be only "english" or "tamil"
+  web_language: english
+  base_url: 'http://localhost:3000'

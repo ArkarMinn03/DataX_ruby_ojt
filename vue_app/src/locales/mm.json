@@ -1,0 +1,66 @@
+{
+  "labels": {
+    "common": {
+      "name": "အမည်",
+      "created_at": "ဖန်တီး ရက်စွဲ",
+      "updated_at": "ပြောင်းလဲ  ရက်စွဲ"
+    },
+    "user": {
+      "first_name": "အမည်",
+      "last_name": "မျိုးနွယ်အမည်",
+      "email": "အီးမေးလ်",
+      "encrypted_password": "စကားဝှက်",
+      "about_me": "ကျွန်ုပ်အကြောင်း",
+      "profile": "ပရိုဖိုင်ပုံ",
+      "gender": "ကျား/မ"
+    },
+    "skill": {
+      "level": "အဆင့်",
+      "duration": "ကြာချိန်"
+    },
+    "education": {
+      "education_type": "ပညာရေးအမျိုးအစား",
+      "description": "ဖော်ပြချက်",
+      "start_date": "စတင်သည့်ရက်စွဲ",
+      "end_date": "ပြီးဆုံးသည့်ရက်စွဲ"
+    },
+    "project": {
+      "title": "ပရောဂျက်ခေါင်းစဉ်",
+      "link": "ပရောဂျက်လင့်ခ်",
+      "description": "ပရောဂျက်ဖော်ပြချက်",
+      "image": "မျက်နှာဖုံးပုံ",
+      "language": "ဘာသာစကား",
+      "user_id": "ပိုင်ရှင်",
+      "category_id": "အမျိုးအစား",
+      "document": "စာရွက်စာတမ်း"
+    }
+  },
+  "messages": {
+    "common": {
+      "create_success": "%{msg} ကို အောင်မြင်စွာ စာရင်းသွင်းပြီးပါပြီ။",
+      "update_success": "%{msg} ကို အောင်မြင်စွာ ပြောင်းလဲပြီးပါပြီ။",
+      "destroy_success": "%{msg} ကို အောင်မြင်စွာ ပယ်ဖျက်ပြီးပါပြီ။"
+    }
+  },
+  "buttons": {
+    "common": {
+      "create": "သိမ်းဆည်းမည်",
+      "update": "ပြောင်းလဲမည်",
+      "delete": "ဖယ်ရှားမည်",
+      "edit": "ပြောင်းလဲမည်",
+      "cancel": "ပယ်ဖျက်မည်",
+      "view_list": "စာရင်းကြည့်မည်",
+      "add_new": "စာရင်းသွင်းရန်"
+    }
+  },
+  "headers": {
+    "register_form": "{msg} စာရင်းထည့်သွင်းခြင်း",
+    "update_form": "{msg} စာရင်းပြောင်းလဲခြင်း",
+    "list": "{msg} စာရင်းဇယား",
+    "detail": "{msg} အသေးစိတ်အချက်အလက်"
+  },
+  "navigations": {
+    "home": "ပင်မစာမျက်နှာ",
+    "user": "အသုံးပြုသူ"
+  }
+}
