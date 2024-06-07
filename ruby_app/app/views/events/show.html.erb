@@ -1,0 +1,8 @@
+<h4>Event Details</h4>
+<p style="color: red"><%= Time.current %></p>
+
+<%= render partial: "event", locals: { event: @event } %>
+
+<%= link_to "Edit this event", edit_event_path(@event) %>
+
+<%= button_to "Delete this event", @event, method: :delete %>

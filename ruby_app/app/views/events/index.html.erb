@@ -1,0 +1,11 @@
+<p class="text-success"><%= notice %></p>
+
+<h3>Events</h3>
+
+<%= link_to "Add Event", new_event_path %>
+
+<% @events.each do |event| %>
+  <%= render event %>
+
+  <%= link_to "View this event", event %>
+<% end %>

@@ -11,6 +11,8 @@ module RubyApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
+    config.time_zone = "Rangoon"
+
     I18n.available_locales = %i[en ta]
 
     language = ENV['web_language']
