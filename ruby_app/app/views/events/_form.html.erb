@@ -19,8 +19,8 @@
   </div>
   <div>
     <%= form.label "Start Time" %>
-    <%= form.date_field :start_date_part %>
-    <%= form.time_field :start_time_part %>
+    <%= form.date_field :start_date_part, id: "startDatePart" %>
+    <%= form.time_field :start_time_part, id: "startTimePart" %>
     <% if flash[:errors].present? && flash[:errors]["start_time"].present? %>
       <% flash[:errors]["start_time"].each do |error| %>
         <span style="color: red; display: block;"><%= error %></span>
@@ -29,8 +29,8 @@
   </div>
   <div>
     <%= form.label "End Time" %>
-    <%= form.date_field :end_date_part %>
-    <%= form.time_field :end_time_part %>
+    <%= form.date_field :end_date_part, id: "endDatePart" %>
+    <%= form.time_field :end_time_part, id: "endTimePart" %>
     <% if flash[:errors].present? && flash[:errors]["end_time"].present? %>
       <% flash[:errors]["end_time"].each do |error| %>
         <span style="color: red; display: block;"><%= error %></span>
@@ -38,16 +38,57 @@
     <% end %>
   </div>
   <div>
-    <%= form.label "Guests"  %>
-    <%= form.collection_check_boxes :guest_ids, users, :id, :full_name do |name| %>
-      <div class="form-check">
-        <%= name.check_box(class: "form-check-input", checked: event.event_guests.any? { |event_guest| event_guest.user_id == name.object.id } ) %>
-        <%= name.label class: "from-check-label" %>
-      </div>
-    <% end %>
+    <%= form.label "Guests", class: "form-label"  %>
+    <%= form.collection_select :guest_ids, users, :id, :full_name, { selected: @guest_ids }, { id: "guests", multiple: true, class: "form-control" } %>
   </div>
   <div>
     <%= form.submit %>
   </div>
 
 <% end %>
+<script>
+  document.addEventListener('turbo:load', function () {
+    $('#guests').select2({
+      placeholder: "Select Guests",
+      allowClear: true
+    });
+
+    var startDateField = $('#startDatePart');
+    var startTimeField = $('#startTimePart');
+    var endDateField = $('#endDatePart');
+    var endTimeField = $('#endTimePart');
+    var now = new Date();
+
+    function padToTwoDigits(number) {
+      return number.toString().padStart(2, '0');
+    }
+
+    function updateEndDate() {
+      endDateField.val(startDateField.val())
+    }
+
+    startDateField.on('change', function() {
+      if (!endDateField.val()) {
+        updateEndDate();
+      }
+    })
+
+    if(!startDateField.val()) {
+      var year = now.getFullYear();
+      var month = padToTwoDigits(now.getMonth() + 1);
+      var day = padToTwoDigits(now.getDay());
+      var formattedDate = `${year}-${month}-${day}`;
+
+      startDateField.val(formattedDate);
+      endDateField.val(formattedDate);
+    }
+
+    if(!startTimeField.val()) {
+      var hours = padToTwoDigits(now.getHours());
+      var minutes = padToTwoDigits(now.getMinutes());
+      var formattedTime = `${hours}:${minutes}`;
+
+      startTimeField.val(formattedTime)
+    }
+  });
+</script>

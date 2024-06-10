@@ -11,6 +11,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @users = User.all.decorate
+    @guest_ids = []
   end
 
   def create
@@ -37,6 +38,7 @@ class EventsController < ApplicationController
     @event.end_date_part = @event.end_time.to_date
     @event.end_time_part = @event.end_time.strftime('%H:%M')
     @users = User.all.decorate
+    @guest_ids = @event.event_guests.pluck(:user_id)
   end
 
   def update
