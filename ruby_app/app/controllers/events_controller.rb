@@ -13,12 +13,6 @@ class EventsController < ApplicationController
   end
 
   def create
-    # @event = Event.new(event_params)
-    # if @event.save
-    #   redirect_to events_path, notice: "Event Created"
-    # else
-    #   redirect_to new_event_path, notice: "Something went wrong", status: :unprocessable_entity
-    # end
     respond_to do |format|
       begin
         event_create_usecase = Events::EventUsecase.new(event_params)
@@ -44,16 +38,26 @@ class EventsController < ApplicationController
   end
 
   def update
-    if @event.update(event_params)
-      redirect_to @event, notice: "Event updated"
-    else
-      redirect_to edit_event_path(@event), notice: "Something Spicy!", status: :unprocessable_entity
+    update_event = Events::EventUsecase.new(event_params)
+    respond_to do |format|
+      if (update_event.update(@event))
+        format.html { redirect_to @event, notice: t('messages.common.update_success', data: "Event") }
+        format.json { render :show, status: :ok, location: @event }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
-    if @event.destroy
-      redirect_to  events_path, notice: "Event deleted"
+    delete_event = Events::EventUsecase.new(nil)
+
+    respond_to do |format|
+      if delete_event.destroy(@event)
+        format.html { redirect_to events_url, notice: t('messages.common.destroy_success', data: "Event") }
+        format.json { head :no_content }
+      end
     end
   end
 

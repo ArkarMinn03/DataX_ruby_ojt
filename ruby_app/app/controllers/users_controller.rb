@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if (updated_user.update(@user))
         format.html { redirect_to @user, notice: t('messages.common.update_success', data: "User") }
-        format.json { render :show, status: :ok, location: @user}
+        format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }

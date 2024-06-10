@@ -21,5 +21,13 @@ module Events
       end
     end
 
+    def destroy(delete_event)
+      event = Event.find(delete_event[:id])
+      if event.destroy
+        return true
+      else
+        return false
+      end
+    end
   end
 end
