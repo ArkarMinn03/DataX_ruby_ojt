@@ -1,4 +1,4 @@
-<%= form_with(model: event) do |form| %>
+<%= form_with(model: event, local: true) do |form| %>
   <div>
     <%= form.label "Title" %>
     <%= form.text_field :title %>
@@ -35,6 +35,15 @@
       <% flash[:errors]["end_time"].each do |error| %>
         <span style="color: red; display: block;"><%= error %></span>
       <% end %>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label "Guests"  %>
+    <%= form.collection_check_boxes :guest_ids, users, :id, :full_name do |name| %>
+      <div class="form-check">
+        <%= name.check_box(class: "form-check-input", checked: event.event_guests.any? { |event_guest| event_guest.user_id == name.object.id } ) %>
+        <%= name.label class: "from-check-label" %>
+      </div>
     <% end %>
   </div>
   <div>

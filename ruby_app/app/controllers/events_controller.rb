@@ -10,6 +10,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @users = User.all.decorate
   end
 
   def create
@@ -35,6 +36,7 @@ class EventsController < ApplicationController
     @event.start_time_part = @event.start_time.strftime('%H:%M')
     @event.end_date_part = @event.end_time.to_date
     @event.end_time_part = @event.end_time.strftime('%H:%M')
+    @users = User.all.decorate
   end
 
   def update
@@ -63,7 +65,7 @@ class EventsController < ApplicationController
 
   private
     def event_params
-      params.require(:event).permit(:title, :description, :start_date_part, :start_time_part, :end_date_part, :end_time_part)
+      params.require(:event).permit(:title, :description, :start_date_part, :start_time_part, :end_date_part, :end_time_part, guest_ids: [])
     end
 
     def set_event

@@ -10,6 +10,7 @@ module Events
     attribute :start_time_part, Time
     attribute :end_date_part, Date
     attribute :end_time_part, Time
+    attribute :guest_ids, Array
 
     validates :title, presence: { message: "Event title cannot be empty" }
     validates :description, presence: { message: "Event description cannot be empty" }
