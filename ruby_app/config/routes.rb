@@ -8,6 +8,12 @@ Rails.application.routes.draw do
   resources :events do
     resources :event_guests
   end
+
+  get 'auth/:provider/callback', to: "sessions#googleAuth"
+  get 'auth/failure', to: redirect('/')
+
+  # get 'auth/google_oauth2', to: redirect('/auth/google_oauth2')
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

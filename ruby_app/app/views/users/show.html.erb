@@ -11,4 +11,6 @@
   <%= link_to "Back to users", users_path %>
 
   <%= button_to t('buttons.common.delete', data: "User"), @user, method: :delete %>
+
+  <%= button_to "Sign in to google account", "/auth/google_oauth2", data: { turbo: false } %>
 </div>
