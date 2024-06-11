@@ -1,11 +1,22 @@
-<p class="text-success"><%= notice %></p>
+<div id="events" class="container p-3 mt-3" style="width: 800px">
+  <% if notice.present? %>
+    <div class="alert alert-info mx-auto text-center">
+      <%= notice %>
+    </div>
+  <% end %>
 
-<h3>Events</h3>
+  <h3 class="text-center mb-4">Events</h3>
+  <% @events.each do |event| %>
+    <div class="row mb-3">
+      <div class="card">
+        <div class="card-body">
+          <%= render partial: "event", locals: { event: event, viewEventDetails: false } %>
+          <div class="float-end">
+            <%= link_to "View this event", event, class: "text-dark" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 
-<%= link_to "Add Event", new_event_path %>
-
-<% @events.each do |event| %>
-  <%= render event %>
-
-  <%= link_to "View this event", event %>
-<% end %>

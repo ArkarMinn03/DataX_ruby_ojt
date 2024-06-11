@@ -1,7 +1,18 @@
-<h4>Event Details</h4>
-<p style="color: red"><%= Time.current %></p>
+<div class="container p-3 mt-3" style="width: 800px;">
+  <h4 class="text-center mb-4">Event Details</h4>
 
-<%= render partial: "event", locals: { event: @event } %>
+  <% if notice.present? %>
+    <div class="alert alert-info mx-auto text-center">
+      <%= notice %>
+    </div>
+  <% end %>
+  <div class="border border-dark-50 rounded p-5">
+    <%= render partial: "event", locals: { event: @event, viewEventDetails: true } %>
+  </div>
+
+</div>
+
+
 
 <%= link_to "Edit this event", edit_event_path(@event) %>
 

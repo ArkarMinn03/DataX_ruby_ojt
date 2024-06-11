@@ -1,18 +1,45 @@
-<div id="<%= dom_id event %>">
-  <p>
-    <strong>Title : </strong>
-    <%= event.title %>
-  </p>
-  <p>
-    <strong>Description : </strong>
+<div id="<%= dom_id event %>" class="">
+  <div>
+    <h4><%= event.title %></h4>
+  </div>
+  <div class="mb-3">
+    <div class="d-inline-block me-3">
+      <span class="">From : </span>
+      <%= event.formated_start_time %>
+    </div>
+    <div class="d-inline-block">
+      <span class="">To : </span>
+      <%= event.formated_end_time %>
+    </div>
+    <% unless viewEventDetails %>
+      <div>
+        Total guests - <%= event.event_guests.count %>
+      </div>
+    <% end %>
+  </div>
+  <div class="text-muted mb-4">
+    <span class="fs-italic">Description - </span>
     <%= event.description %>
-  </p>
-  <p>
-    <strong>Start Time : </strong>
-    <%= event.formated_start_time %>
-  </p>
-  <p>
-    <strong>End Time : </strong>
-    <%= event.formated_end_time %>
-  </p>
+  </div>
+
+  <% if viewEventDetails %>
+    <div class="">
+      <div class="border-bottom border-2 border-primary mb-2">
+        <h4>Guests</h4>
+      </div>
+      <div class="row">
+        <% event.event_guests.each do |event_guest| %>
+          <div class="col-3 p-2">
+            <div class="bg-light d-flex justify-content-center">
+              <div>
+              </div>
+              <div>
+              </div>
+            </div>
+          </div>
+          <%= event_guest.user.decorate.full_name %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 </div>

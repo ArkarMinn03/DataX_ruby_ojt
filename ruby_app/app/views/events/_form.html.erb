@@ -1,48 +1,62 @@
 <%= form_with(model: event, local: true) do |form| %>
-  <div>
-    <%= form.label "Title" %>
-    <%= form.text_field :title %>
+  <div class="mb-3">
+    <%= form.label "Title", class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
     <% if flash[:errors].present? && flash[:errors]["title"].present? %>
       <% flash[:errors]["title"].each do |error| %>
         <span style="color: red; display: block;"><%= error %></span>
       <% end %>
     <% end %>
   </div>
-  <div>
-    <%= form.label "Description" %>
-    <%= form.text_field :description %>
+  <div class="row g-5 mb-3">
+    <div class="col">
+      <%= form.label "Start Time", class: "form-label" %>
+      <div class="row g-3">
+        <div class="col">
+          <%= form.date_field :start_date_part, id: "startDatePart", class: "form-control" %>
+        </div>
+        <div class="col">
+          <%= form.time_field :start_time_part, id: "startTimePart", class: "form-control" %>
+        </div>
+      </div>
+      <% if flash[:errors].present? && flash[:errors]["start_time"].present? %>
+        <% flash[:errors]["start_time"].each do |error| %>
+          <span style="color: red; display: block;"><%= error %></span>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col">
+      <%= form.label "End Time", class: "form-label" %>
+      <div class="row g-3">
+        <div class="col">
+          <%= form.date_field :end_date_part, id: "endDatePart", class: "form-control" %>
+        </div>
+        <div class="col">
+          <%= form.time_field :end_time_part, id: "endTimePart", class: "form-control" %>
+        </div>
+      </div>
+      <% if flash[:errors].present? && flash[:errors]["end_time"].present? %>
+        <% flash[:errors]["end_time"].each do |error| %>
+          <span style="color: red; display: block;"><%= error %></span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="mb-3">
+    <%= form.label "Description", class: "form-label" %>
+    <%= form.text_area :description, class: "form-control" %>
     <% if flash[:errors].present? && flash[:errors]["description"].present? %>
       <% flash[:errors]["description"].each do |error| %>
         <span style="color: red; display: block;"><%= error %></span>
       <% end %>
     <% end %>
   </div>
-  <div>
-    <%= form.label "Start Time" %>
-    <%= form.date_field :start_date_part, id: "startDatePart" %>
-    <%= form.time_field :start_time_part, id: "startTimePart" %>
-    <% if flash[:errors].present? && flash[:errors]["start_time"].present? %>
-      <% flash[:errors]["start_time"].each do |error| %>
-        <span style="color: red; display: block;"><%= error %></span>
-      <% end %>
-    <% end %>
-  </div>
-  <div>
-    <%= form.label "End Time" %>
-    <%= form.date_field :end_date_part, id: "endDatePart" %>
-    <%= form.time_field :end_time_part, id: "endTimePart" %>
-    <% if flash[:errors].present? && flash[:errors]["end_time"].present? %>
-      <% flash[:errors]["end_time"].each do |error| %>
-        <span style="color: red; display: block;"><%= error %></span>
-      <% end %>
-    <% end %>
-  </div>
-  <div>
+  <div class="mb-3">
     <%= form.label "Guests", class: "form-label"  %>
     <%= form.collection_select :guest_ids, users, :id, :full_name, { selected: @guest_ids }, { id: "guests", multiple: true, class: "form-control" } %>
   </div>
-  <div>
-    <%= form.submit %>
+  <div class="text-center">
+    <%= form.submit "Create Event", class: "btn btn-primary" %>
   </div>
 
 <% end %>

@@ -6,6 +6,7 @@ class EventsController < ApplicationController
   end
 
   def show
+    @users = User.all.decorate
   end
 
   def new
