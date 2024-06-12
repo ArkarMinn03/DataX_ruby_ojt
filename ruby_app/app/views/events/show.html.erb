@@ -8,12 +8,15 @@
   <% end %>
   <div class="border border-dark-50 rounded p-5">
     <%= render partial: "event", locals: { event: @event, viewEventDetails: true } %>
+
+    <div class="d-flex justify-content-center">
+      <%= link_to "Edit this event", edit_event_path(@event), class: "btn btn-success me-2" %>
+
+      <%= button_to "Delete this event", @event, method: :delete, class: "btn btn-danger" %>
+    </div>
   </div>
 
 </div>
 
 
 
-<%= link_to "Edit this event", edit_event_path(@event) %>
-
-<%= button_to "Delete this event", @event, method: :delete %>

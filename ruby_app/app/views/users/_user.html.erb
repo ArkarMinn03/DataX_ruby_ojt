@@ -1,38 +1,78 @@
 <div id="<%= dom_id user %>" class="row mb-2">
-  <% if viewUserDetail.present? %>
-    <div class="alert alert-info"></div>
-  <% end %>
   <div class="col-4">
-    <div style="width: 200px; height: auto;">
+    <div>
       <% if user.profile.present?  %>
-        <%= image_tag user.profile, style: "width:100px; border-radius:10%" %>
+        <% if viewUserDetail %>
+          <%= image_tag user.profile, style: "width:200px; border-radius:10%" %>
+        <% else %>
+          <%= image_tag user.profile, style: "width:120px; border-radius:10%" %>
+        <% end %>
       <% end %>
     </div>
   </div>
-  <div class="col">
-    <div class="">
-      <div class="mb-2">
-        <span class="fw-bold"><%= t('labels.user.first_name') %> : </span>
-        <%= user.first_name %>
-      </div>
-      <div class="mb-2">
-        <span class="fw-bold"><%= t('labels.user.last_name') %> : </span>
-        <%= user.last_name %>
-      </div>
-      <div class="mb-2">
-        <span class="fw-bold"><%= t('labels.user.email') %> : </span>
-        <%= user.email %>
-      </div>
-      <div class="mb-2">
-        <span class="fw-bold"><%= t('labels.user.gender_type') %> : </span>
-        <%= user.gender_type %>
-      </div>
-      <div class="mb-2 d-flex align-items-center">
-        <span class="fw-bold"><%= t('labels.user.about_me') %> : </span>
-        <span class="d-inline-block text-truncate ms-1" style="max-width: 130px;">
-          <%= user.about_me %>
-        </span>
+  <% if viewUserDetail %>
+    <div>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td class="py-3 col-4"><%= t('labels.user.first_name') %></td>
+            <td class="py-3 col-8"><%= user.first_name %></td>
+          </tr>
+          <tr>
+            <td class="py-3 col-4"><%= t('labels.user.last_name') %></td>
+            <td class="py-3 col-8"><%= user.last_name %></td>
+          </tr>
+          <tr>
+            <td class="py-3 col-4"><%= t('labels.user.email') %></td>
+            <td class="py-3 col-8"><%= user.email %></td>
+          </tr>
+          <tr>
+            <td class="py-3 col-4"><%= t('labels.user.gender_type') %></td>
+            <td class="py-3 col-8"><%= user.gender_type %></td>
+          </tr>
+          <tr>
+            <td class="py-3 col-4"><%= t('labels.user.about_me') %></td>
+            <td class="py-3 col-8"><%= user.about_me %></td>
+          </tr>
+          <tr>
+            <td class="py-3 col-4"><%= t('labels.common.created_at') %></td>
+            <td class="py-3 col-8"><%= user.formated_created_at %></td>
+          </tr>
+          <tr>
+            <td class="py-3 col-4"><%= t('labels.common.updated_at') %></td>
+            <td class="py-3 col-8"><%= user.formated_updated_at %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="col">
+      <div class="">
+        <div class="mb-2">
+          <span class="fw-bold"><%= t('labels.user.first_name') %> : </span>
+          <%= user.first_name %>
+        </div>
+        <div class="mb-2">
+          <span class="fw-bold"><%= t('labels.user.last_name') %> : </span>
+          <%= user.last_name %>
+        </div>
+        <div class="mb-2 d-flex align-items-center">
+          <span class="fw-bold"><%= t('labels.user.email') %> : </span>
+          <span class="d-inline-block text-truncate ms-1" style="max-width: 130px;">
+            <%= user.email %>
+          </span>
+        </div>
+        <div class="mb-2">
+          <span class="fw-bold"><%= t('labels.user.gender_type') %> : </span>
+          <%= user.gender_type %>
+        </div>
+        <div class="mb-2 d-flex align-items-center">
+          <span class="fw-bold"><%= t('labels.user.about_me') %> : </span>
+          <span class="d-inline-block text-truncate ms-1" style="max-width: 130px;">
+            <%= user.about_me %>
+          </span>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>

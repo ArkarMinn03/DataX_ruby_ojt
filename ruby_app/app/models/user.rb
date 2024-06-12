@@ -13,4 +13,8 @@ class User < ApplicationRecord
       user.email = auth.info.email
     end
   end
+
+  def google_token_expired?
+    expired_at < Time.current
+  end
 end

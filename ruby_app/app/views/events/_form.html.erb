@@ -82,7 +82,7 @@
     }
 
     startDateField.on('change', function() {
-      if (!endDateField.val()) {
+      if (!endDateField.val() || endDateField.val() < startDateField.val()) {
         updateEndDate();
       }
     })
@@ -90,7 +90,7 @@
     if(!startDateField.val()) {
       var year = now.getFullYear();
       var month = padToTwoDigits(now.getMonth() + 1);
-      var day = padToTwoDigits(now.getDay());
+      var day = padToTwoDigits(now.getDate());
       var formattedDate = `${year}-${month}-${day}`;
 
       startDateField.val(formattedDate);
@@ -100,9 +100,15 @@
     if(!startTimeField.val()) {
       var hours = padToTwoDigits(now.getHours());
       var minutes = padToTwoDigits(now.getMinutes());
-      var formattedTime = `${hours}:${minutes}`;
+      var formattedStartTime = `${hours}:${minutes}`;
 
-      startTimeField.val(formattedTime)
+      var endMinutes = now.getMinutes + 30;
+      var endHours = padToTwoDigits(now.getHours() + Math.floor(endMinutes / 60));
+      endMinutes = padToTwoDigits(endMinutes % 60);
+      var formattedEndTime = `${endHours}:${endMinutes}`;
+
+      startTimeField.val(formattedStartTime)
+      endTimeField.val(formattedEndTime)
     }
   });
 </script>

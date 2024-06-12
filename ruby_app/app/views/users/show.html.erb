@@ -1,16 +1,25 @@
 <div class="container p-3 mt-3" style="width: 800px;">
-  <p style="color: green"><%= notice %></p>
-  <h4 class="text-center">User Profile</h4>
-  <div class="w-50 mx-auto mt-4 border border-dark-50 rounded p-3">
+  <h4 class="text-center mb-4">User Profile</h4>
+  <% if notice.present? %>
+    <div class="alert alert-info text-center">
+      <%= notice %>
+    </div>
+  <% end %>
+  <div class="mx-auto mt-4 border border-dark-50 rounded p-3">
     <%= render partial: "user", locals: { user: @user, viewUserDetail: true } %>
+
+    <div class="d-flex justify-content-center">
+      <%= link_to "Edit this user", edit_user_path(@user), class: "btn btn-primary me-2" %>
+      <%= link_to "Back to users", users_path, class: "btn btn-secondary me-2" %>
+
+      <%= button_to t('buttons.common.delete', data: "User"), @user, method: :delete, class: "btn btn-danger me-2" %>
+
+      <% if @user.google_token.present? %>
+        <button class="btn btn-success">Google Linked!</button>
+      <% else %>
+        <%= button_to "Sign in to google account", "/auth/google_oauth2", data: { turbo: false }, class: "btn btn-outline-success" %>
+      <% end %>
+    </div>
   </div>
 </div>
 
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-
-  <%= button_to t('buttons.common.delete', data: "User"), @user, method: :delete %>
-
-  <%= button_to "Sign in to google account", "/auth/google_oauth2", data: { turbo: false } %>
-</div>
