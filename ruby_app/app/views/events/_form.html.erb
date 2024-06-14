@@ -12,7 +12,7 @@
     <div class="row">
       <div class="col">
         <%= form.label "Start Time", class: "form-label" %>
-        <div class="row g-3">
+        <div class="row">
           <div class="col">
             <%= form.date_field :start_date_part, id: "startDatePart", class: "form-control" %>
           </div>
@@ -28,7 +28,7 @@
       </div>
       <div class="col">
         <%= form.label "End Time", class: "form-label" %>
-        <div class="row g-3">
+        <div class="row">
           <div class="col">
             <%= form.date_field :end_date_part, id: "endDatePart", class: "form-control" %>
           </div>
@@ -56,6 +56,11 @@
   <div class="mb-3">
     <%= form.label "Guests", class: "form-label"  %>
     <%= form.collection_select :guest_ids, users, :id, :full_name, { selected: @guest_ids }, { id: "guests", multiple: true, class: "form-control" } %>
+    <% if flash[:errors].present? && flash[:errors]["guest_ids"].present? %>
+      <% flash[:errors]["guest_ids"].each do |error| %>
+        <span style="color: red; display: block;"><%= error %></span>
+      <% end %>
+    <% end %>
   </div>
   <div class="text-center">
     <%= form.submit "Create Event", class: "btn btn-primary" %>
@@ -69,6 +74,78 @@
       allowClear: true
     });
 
+    var startDateField = $('#startDatePart');
+    var startTimeField = $('#startTimePart');
+    var endDateField = $('#endDatePart');
+    var endTimeField = $('#endTimePart');
+
+    function padToTwoDigits(number) {
+      return number.toString().padStart(2, '0');
+    }
+
+    function addThirtyMinutes(startTime){
+      const time = startTime.split(":");
+
+      var endDateTime = new Date();
+      endDateTime.setHours(parseInt(time[0]));
+      endDateTime.setMinutes(parseInt(time[1]) + 30);
+
+      var endHours = padToTwoDigits(endDateTime.getHours());
+      var endMinutes = padToTwoDigits(endDateTime.getMinutes());
+      var formattedEndTime = `${endHours}:${endMinutes}`;
+
+      return formattedEndTime;
+    }
+
+    function updateEndDate() {
+      endDateField.val(startDateField.val())
+    }
+
+    function updateEndTime() {
+      endTimeField.val(addThirtyMinutes(startTimeField.val()));
+    }
+
+
+    startDateField.on('change', function() {
+      if (!endDateField.val() || endDateField.val() < startDateField.val()) {
+        updateEndDate();
+        updateEndTime();
+      }
+    })
+
+    startTimeField.on('change', function() {
+      if ((startDateField.val() == endDateField.val()) && (startTimeField.val() > endTimeField.val())) {
+        updateEndTime();
+      }
+    })
+
+    if(!startDateField.val()) {
+      var now = new Date();
+      var year = now.getFullYear();
+      var month = padToTwoDigits(now.getMonth() + 1);
+      var day = padToTwoDigits(now.getDate());
+      var formattedDate = `${year}-${month}-${day}`;
+
+      startDateField.val(formattedDate);
+      endDateField.val(formattedDate);
+    }
+
+    if(!startTimeField.val()) {
+      const current = new Date();
+      current.setMinutes(current.getMinutes() + 10);
+
+      var currentHours = current.getHours();
+      var currentMinutes = current.getMinutes();
+
+      var startHours = padToTwoDigits(currentHours);
+      var startMinutes = padToTwoDigits(currentMinutes);
+      var formattedStartTime = `${startHours}:${startMinutes}`;
+
+      var formattedEndTime = addThirtyMinutes(formattedStartTime)
+
+      startTimeField.val(formattedStartTime)
+      endTimeField.val(formattedEndTime)
+    }
 
   });
 </script>

@@ -2,7 +2,7 @@ class Event < ApplicationRecord
   has_many :event_guests, dependent: :destroy
   # has_many :guests, through: :event_guests, source: :user
 
-  attr_accessor :start_date_part, :start_time_part, :end_date_part, :end_time_part
+  attr_accessor :start_date_part, :start_time_part, :end_date_part, :end_time_part, :guest_ids
 
   before_save :combine_date_time
   before_update :combine_date_time

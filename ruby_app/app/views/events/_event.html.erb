@@ -2,11 +2,6 @@
   <div>
     <h4>
       <%= event.title %>
-      <% if event.google_calendar_id.present? %>
-        <span class="badge fs-6 fw-medium text-bg-success float-end">Synced</span>
-      <% else %>
-        <span class="badge fs-6 fw-medium text-bg-secondary float-end">Unsynced</span>
-      <% end %>
     </h4>
   </div>
   <div class="mb-3">
@@ -39,7 +34,9 @@
           <div class="col-4 p-2">
             <div class="bg-light d-flex align-items-center p-2 rounded">
               <div class="me-3">
-                <%= image_tag event_guest.user.profile, style: "width: 50px; border-radius:50%" %>
+                <div class="rounded-circle border border-3 <%= 'border-success' if event_guest.google_event_id.present? %>">
+                  <%= image_tag event_guest.user.profile, style: "width: 50px; border-radius:50%", class: "border border-2 border-light" %>
+                </div>
               </div>
               <div>
                 <%= event_guest.user.decorate.full_name %>

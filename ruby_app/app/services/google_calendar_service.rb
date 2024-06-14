@@ -22,11 +22,11 @@ class GoogleCalendarService
     client.insert_event('primary', googleEvent)
   end
 
-  def update_event(event)
+  def update_event(event, google_event_id)
     client = google_client
     googleEvent = set_google_event(event)
 
-    client.update_event('primary', event.google_calendar_id, googleEvent)
+    client.update_event('primary', google_event_id, googleEvent)
   end
 
   def delete_event(event_id)
