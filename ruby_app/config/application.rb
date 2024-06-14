@@ -13,6 +13,8 @@ module RubyApp
 
     config.time_zone = "Rangoon"
 
+    config.active_record.default_timezone = :local
+
     I18n.available_locales = %i[en ta]
 
     language = ENV['web_language']

@@ -15,9 +15,9 @@
       <%= button_to t('buttons.common.delete', data: "User"), @user, method: :delete, class: "btn btn-danger me-2" %>
 
       <% if @user.google_token.present? %>
-        <button class="btn btn-success">Google Linked!</button>
+        <%= button_to "Disconnect google account", "/disconnect_google/#{@user.id}", method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %>
       <% else %>
-        <%= button_to "Sign in to google account", "/auth/google_oauth2", data: { turbo: false }, class: "btn btn-outline-success" %>
+        <%= button_to "Sign in to google account", "/auth/google_oauth2", data: { turbo: false }, class: "btn btn-success" %>
       <% end %>
     </div>
   </div>

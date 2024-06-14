@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get 'auth/:provider/callback', to: "sessions#googleAuth"
   get 'auth/failure', to: redirect('/')
+  delete 'disconnect_google/:id', to: "sessions#disconnect"
 
   # get 'auth/google_oauth2', to: redirect('/auth/google_oauth2')
 

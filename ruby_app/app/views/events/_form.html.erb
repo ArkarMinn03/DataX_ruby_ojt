@@ -8,38 +8,40 @@
       <% end %>
     <% end %>
   </div>
-  <div class="row g-5 mb-3">
-    <div class="col">
-      <%= form.label "Start Time", class: "form-label" %>
-      <div class="row g-3">
-        <div class="col">
-          <%= form.date_field :start_date_part, id: "startDatePart", class: "form-control" %>
+  <div class="mb-3">
+    <div class="row">
+      <div class="col">
+        <%= form.label "Start Time", class: "form-label" %>
+        <div class="row g-3">
+          <div class="col">
+            <%= form.date_field :start_date_part, id: "startDatePart", class: "form-control" %>
+          </div>
+          <div class="col">
+            <%= form.time_field :start_time_part, id: "startTimePart", class: "form-control" %>
+          </div>
         </div>
-        <div class="col">
-          <%= form.time_field :start_time_part, id: "startTimePart", class: "form-control" %>
-        </div>
-      </div>
-      <% if flash[:errors].present? && flash[:errors]["start_time"].present? %>
-        <% flash[:errors]["start_time"].each do |error| %>
-          <span style="color: red; display: block;"><%= error %></span>
+        <% if flash[:errors].present? && flash[:errors]["start_time"].present? %>
+          <% flash[:errors]["start_time"].each do |error| %>
+            <span style="color: red; display: block;"><%= error %></span>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-    <div class="col">
-      <%= form.label "End Time", class: "form-label" %>
-      <div class="row g-3">
-        <div class="col">
-          <%= form.date_field :end_date_part, id: "endDatePart", class: "form-control" %>
-        </div>
-        <div class="col">
-          <%= form.time_field :end_time_part, id: "endTimePart", class: "form-control" %>
-        </div>
       </div>
-      <% if flash[:errors].present? && flash[:errors]["end_time"].present? %>
-        <% flash[:errors]["end_time"].each do |error| %>
-          <span style="color: red; display: block;"><%= error %></span>
+      <div class="col">
+        <%= form.label "End Time", class: "form-label" %>
+        <div class="row g-3">
+          <div class="col">
+            <%= form.date_field :end_date_part, id: "endDatePart", class: "form-control" %>
+          </div>
+          <div class="col">
+            <%= form.time_field :end_time_part, id: "endTimePart", class: "form-control" %>
+          </div>
+        </div>
+        <% if flash[:errors].present? && flash[:errors]["end_time"].present? %>
+          <% flash[:errors]["end_time"].each do |error| %>
+            <span style="color: red; display: block;"><%= error %></span>
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
   <div class="mb-3">
@@ -67,48 +69,6 @@
       allowClear: true
     });
 
-    var startDateField = $('#startDatePart');
-    var startTimeField = $('#startTimePart');
-    var endDateField = $('#endDatePart');
-    var endTimeField = $('#endTimePart');
-    var now = new Date();
 
-    function padToTwoDigits(number) {
-      return number.toString().padStart(2, '0');
-    }
-
-    function updateEndDate() {
-      endDateField.val(startDateField.val())
-    }
-
-    startDateField.on('change', function() {
-      if (!endDateField.val() || endDateField.val() < startDateField.val()) {
-        updateEndDate();
-      }
-    })
-
-    if(!startDateField.val()) {
-      var year = now.getFullYear();
-      var month = padToTwoDigits(now.getMonth() + 1);
-      var day = padToTwoDigits(now.getDate());
-      var formattedDate = `${year}-${month}-${day}`;
-
-      startDateField.val(formattedDate);
-      endDateField.val(formattedDate);
-    }
-
-    if(!startTimeField.val()) {
-      var hours = padToTwoDigits(now.getHours());
-      var minutes = padToTwoDigits(now.getMinutes());
-      var formattedStartTime = `${hours}:${minutes}`;
-
-      var endMinutes = now.getMinutes + 30;
-      var endHours = padToTwoDigits(now.getHours() + Math.floor(endMinutes / 60));
-      endMinutes = padToTwoDigits(endMinutes % 60);
-      var formattedEndTime = `${endHours}:${endMinutes}`;
-
-      startTimeField.val(formattedStartTime)
-      endTimeField.val(formattedEndTime)
-    }
   });
 </script>

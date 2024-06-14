@@ -55,7 +55,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_12_034425) do
     t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "google_canlendar_id"
+    t.string "google_calendar_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

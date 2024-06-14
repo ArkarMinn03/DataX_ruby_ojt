@@ -3,8 +3,6 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all.decorate
-    # @calendar_service = GoogleCalendarService.new(19)
-    # @events = @calendar_service.list_events
   end
 
   def show

@@ -16,19 +16,20 @@ module Events
     validates :description, presence: { message: "Event description cannot be empty" }
     validates :start_time, presence: { message: "Start time cannot be empty" }
     validates :end_time, presence: { message: "End time cannot be empty" }
+    validates :guest_ids, presence: { message: "Guest cannot be empty. Must have atleast one guest." }
     validate :start_time_check
     validate :end_time_check
     # validates :end_time_check, presence: { message: "End time Must be after Start time"}
 
     def start_time
       if @start_date_part.present? && @start_time_part.present?
-        DateTime.parse("#{ @start_date_part } #{ @start_time_part }")
+        Time.parse("#{ @start_date_part } #{ @start_time_part }")
       end
     end
 
     def end_time
       if @end_date_part.present? && @end_time_part.present?
-        DateTime.parse("#{ @end_date_part } #{ @end_time_part }")
+        Time.parse("#{ @end_date_part } #{ @end_time_part }")
       end
     end
 

@@ -1,6 +1,13 @@
 <div id="<%= dom_id event %>" class="mb-5">
   <div>
-    <h4><%= event.title %></h4>
+    <h4>
+      <%= event.title %>
+      <% if event.google_calendar_id.present? %>
+        <span class="badge fs-6 fw-medium text-bg-success float-end">Synced</span>
+      <% else %>
+        <span class="badge fs-6 fw-medium text-bg-secondary float-end">Unsynced</span>
+      <% end %>
+    </h4>
   </div>
   <div class="mb-3">
     <div class="d-inline-block me-3">

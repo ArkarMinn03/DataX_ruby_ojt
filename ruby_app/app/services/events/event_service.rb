@@ -7,6 +7,9 @@ module Events
     def create
       event = Event.new(@params.except(:guest_ids))
       if event.save
+        googleEvent = create_google_event(event)
+        event.update(google_calendar_id: googleEvent.id)
+
         add_guests(event)
         return { event: event, status: :created }
       else
@@ -16,6 +19,8 @@ module Events
 
     def update(update_event)
       if update_event.update(@params.except(:guest_ids))
+        update_google_event(update_event)
+
         update_guests(update_event, @params[:guest_ids])
         return { event: update_event, status: :updated }
       else
@@ -25,6 +30,7 @@ module Events
 
     def destroy(delete_event)
       event = Event.find(delete_event[:id])
+      delete_google_event(event.google_calendar_id)
       if event.destroy
         return true
       else
@@ -50,6 +56,21 @@ module Events
         end
 
         EventGuest.import(event_guests)
+      end
+
+      def create_google_event(event)
+        calendar_service = GoogleCalendarService.new(19)
+        calendar_service.create_event(event);
+      end
+
+      def update_google_event(event)
+        calendar_service = GoogleCalendarService.new(19)
+        calendar_service.update_event(event)
+      end
+
+      def delete_google_event(event_id)
+        calendar_service = GoogleCalendarService.new(19)
+        calendar_service.delete_event(event_id)
       end
   end
 end

@@ -15,26 +15,23 @@ class GoogleCalendarService
     client
   end
 
-  def list_events(calendar_id = 'primary')
+  def create_event(event)
     client = google_client
-    response = client.list_events(
-      calendar_id,
-      max_results: 10,
-      single_events: true,
-      order_by: 'startTime',
-      time_min: Time.now.iso8601
-    )
-    eventsList = []
-    if response.items.empty?
-      Rails.logger.info 'No upcoming events found.'
-      return eventsList
-    else
-      response.items.each do |event|
-        start = event.start.date || event.start.date_time
-        eventsList << { summary: event.summary, start: start, id: event.id }
-      end
-      return eventsList
-    end
+    googleEvent = set_google_event(event)
+
+    client.insert_event('primary', googleEvent)
+  end
+
+  def update_event(event)
+    client = google_client
+    googleEvent = set_google_event(event)
+
+    client.update_event('primary', event.google_calendar_id, googleEvent)
+  end
+
+  def delete_event(event_id)
+    client = google_client
+    client.delete_event('primary', event_id)
   end
 
   private
@@ -46,6 +43,21 @@ class GoogleCalendarService
           "client_id" => ENV['GOOGLE_CLIENT_ID'],
           "client_secret" => ENV['GOOGLE_CLIENT_SECRET']
         }
+      )
+    end
+
+    def set_google_event(event)
+      Google::Apis::CalendarV3::Event.new(
+        summary: event.title,
+        description: event.description,
+        start: Google::Apis::CalendarV3::EventDateTime.new(
+          date_time: event.start_time.iso8601,
+          time_zone: "Asia/Yangon"
+        ),
+        end: Google::Apis::CalendarV3::EventDateTime.new(
+          date_time: event.end_time.iso8601,
+          time_zone: "Asia/Yangon"
+        )
       )
     end
 
