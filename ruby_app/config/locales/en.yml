@@ -12,6 +12,13 @@ en:
       profile: "Profile"
       gender: "Gender"
 
+    event:
+      title: "Title"
+      start_time: "Start Time"
+      end_time: "End_time"
+      description: "Description"
+      guests: "Guests"
+
     skill:
       level: "Level"
       duration: "Duration"
@@ -35,11 +42,15 @@ en:
   messages:
     common:
       create_success: "%{data} was successfully created."
+      create_fail: "Something went wrong and creating %{data} fails."
       update_success: "%{data} was successfully updated."
+      update_fail: "Something went wrong and updating %{data} fails."
       destroy_success: "%{data} was successfully destroyed."
+      destroy_fail: "Something went wrong and destroying %{data} fails."
 
   buttons:
     common:
       create: "Create %{data}"
       update: "Update %{data}"
       delete: "Delete %{data}"
+      edit: "Edit %{data}"

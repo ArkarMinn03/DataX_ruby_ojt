@@ -17,8 +17,6 @@ module Events
     def update(update_event)
       if update_event.update(@params.except(:guest_ids))
         update_google_events(update_event, @params[:guest_ids])
-
-        # update_guests(update_event, @params[:guest_ids])
         return { event: update_event, status: :updated }
       else
         return { event: update_event, status: :unprocessable_entity }
@@ -62,8 +60,10 @@ module Events
         removed_guest_ids.map do |rm_guest_id|
           if rm_guest_id != "" && User.find(rm_guest_id).google_token.present?
             removed_guest = event.event_guests.find_by(user_id: rm_guest_id)
-            calendar_remove_service = GoogleCalendarService.new(removed_guest.user_id)
-            calendar_remove_service.delete_event(removed_guest.google_event_id)
+            if removed_guest.google_event_id.present?
+              calendar_remove_service = GoogleCalendarService.new(removed_guest.user_id)
+              calendar_remove_service.delete_event(removed_guest.google_event_id)
+            end
           end
         end
 

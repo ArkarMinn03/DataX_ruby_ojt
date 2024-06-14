@@ -24,7 +24,7 @@ class EventsController < ApplicationController
           format.html { redirect_to events_path, notice: t("messages.common.create_success", data: "Event") }
         else
           flash[:errors] = response[:errors]
-          format.html { redirect_to new_event_path, status: :unprocessable_entity, event: response[:event], errors: response[:errors] }
+          format.html { redirect_to new_event_path, status: :unprocessable_entity, event: response[:event], errors: response[:errors], alert: t("messages.common.create_fail", data: "Event") }
         end
       rescue StandardError => errors
         logger.error "Something went wrong while creating event. #{ errors.message }"

@@ -9,8 +9,8 @@
     <%= render partial: "user", locals: { user: @user, viewUserDetail: true } %>
 
     <div class="d-flex justify-content-center">
-      <%= link_to "Edit this user", edit_user_path(@user), class: "btn btn-primary me-2" %>
-      <%= link_to "Back to users", users_path, class: "btn btn-secondary me-2" %>
+    <%= link_to "Back to users", users_path, class: "btn btn-secondary me-2" %>
+    <%= link_to t('buttons.common.edit', data: 'User'), edit_user_path(@user), class: "btn btn-primary me-2" %>
 
       <%= button_to t('buttons.common.delete', data: "User"), @user, method: :delete, class: "btn btn-danger me-2" %>
 

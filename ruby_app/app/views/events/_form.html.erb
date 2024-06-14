@@ -1,6 +1,6 @@
 <%= form_with(model: event, local: true) do |form| %>
   <div class="mb-3">
-    <%= form.label "Title", class: "form-label" %>
+    <%= form.label t('labels.event.title'), class: "form-label" %>
     <%= form.text_field :title, class: "form-control" %>
     <% if flash[:errors].present? && flash[:errors]["title"].present? %>
       <% flash[:errors]["title"].each do |error| %>
@@ -11,7 +11,7 @@
   <div class="mb-3">
     <div class="row">
       <div class="col">
-        <%= form.label "Start Time", class: "form-label" %>
+        <%= form.label t('labels.event.start_time'), class: "form-label" %>
         <div class="row">
           <div class="col">
             <%= form.date_field :start_date_part, id: "startDatePart", class: "form-control" %>
@@ -27,7 +27,7 @@
         <% end %>
       </div>
       <div class="col">
-        <%= form.label "End Time", class: "form-label" %>
+        <%= form.label t('labels.event.end_time'), class: "form-label" %>
         <div class="row">
           <div class="col">
             <%= form.date_field :end_date_part, id: "endDatePart", class: "form-control" %>
@@ -45,7 +45,7 @@
     </div>
   </div>
   <div class="mb-3">
-    <%= form.label "Description", class: "form-label" %>
+    <%= form.label t('labels.event.description'), class: "form-label" %>
     <%= form.text_area :description, class: "form-control" %>
     <% if flash[:errors].present? && flash[:errors]["description"].present? %>
       <% flash[:errors]["description"].each do |error| %>
@@ -54,7 +54,7 @@
     <% end %>
   </div>
   <div class="mb-3">
-    <%= form.label "Guests", class: "form-label"  %>
+    <%= form.label t('labels.event.guests'), class: "form-label"  %>
     <%= form.collection_select :guest_ids, users, :id, :full_name, { selected: @guest_ids }, { id: "guests", multiple: true, class: "form-control" } %>
     <% if flash[:errors].present? && flash[:errors]["guest_ids"].present? %>
       <% flash[:errors]["guest_ids"].each do |error| %>
@@ -63,7 +63,11 @@
     <% end %>
   </div>
   <div class="text-center">
-    <%= form.submit "Create Event", class: "btn btn-primary" %>
+    <% if local_assigns[:form_type] == :edit %>
+      <%= form.submit t('buttons.common.update', data: "Event"), class: "btn btn-primary" %>
+    <% else %>
+      <%= form.submit t('buttons.common.create', data: "Event"), class: "btn btn-primary" %>
+    <% end %>
   </div>
 
 <% end %>
