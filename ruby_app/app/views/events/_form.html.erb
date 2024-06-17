@@ -83,6 +83,30 @@
     return number.toString().padStart(2, '0');
   }
 
+  function setStartTime() {
+    const now = new Date();
+
+    var min = now.getMinutes();
+
+    if (min > 0 && min < 5) {
+      now.setMinutes(15);
+    } else if (min > 5 && min < 20) {
+      now.setMinutes(30);
+    } else if (min > 20 && min < 35) {
+      now.setMinutes(45);
+    } else if (min > 35 && min < 50) {
+      now.setMinutes(60);
+    } else if (min > 50) {
+      now.setMinutes(75);
+    }
+
+    var startHours = padToTwoDigits(now.getHours());
+    var startMinutes = padToTwoDigits(now.getMinutes());
+    var formattedStartTime = `${startHours}:${startMinutes}`;
+
+    return formattedStartTime;
+  }
+
   function addThirtyMinutes(startTime){
     const time = startTime.split(":");
 
@@ -105,13 +129,6 @@
     endTimeField.val(addThirtyMinutes(startTimeField.val()));
   }
 
-  function initializeSelect2() {
-    $('#guests').select2({
-        placeholder: "Select Guests",
-        allowClear: true
-      });
-  }
-
   startDateField.on('change', function() {
     if (!endDateField.val() || endDateField.val() < startDateField.val()) {
       updateEndDate();
@@ -120,7 +137,7 @@
   })
 
   startTimeField.on('change', function() {
-    if ((startDateField.val() == endDateField.val()) && (startTimeField.val() > endTimeField.val())) {
+    if ((startDateField.val() == endDateField.val()) && (addThirtyMinutes(startTimeField.val()) > endTimeField.val())) {
       updateEndTime();
     }
   })
@@ -137,15 +154,7 @@
   }
 
   if(!startTimeField.val()) {
-    const current = new Date();
-    current.setMinutes(current.getMinutes() + 10);
-
-    var currentHours = current.getHours();
-    var currentMinutes = current.getMinutes();
-
-    var startHours = padToTwoDigits(currentHours);
-    var startMinutes = padToTwoDigits(currentMinutes);
-    var formattedStartTime = `${startHours}:${startMinutes}`;
+    var formattedStartTime = setStartTime();
 
     var formattedEndTime = addThirtyMinutes(formattedStartTime)
 
