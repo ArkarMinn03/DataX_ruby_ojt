@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
 
   def index
-    @users = User.all.decorate
+    @users = User.all.order('first_name').decorate
   end
 
   def show
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
           format.json { render :index, status: :ok, location: @user }
         else
           flash[:errors] = response[:errors]
-          format.html { redirect_to new_user_path, status: :unprocessable_entity, user: response[:user], errors: response[:errors] }
+          format.html { render :new, status: :unprocessable_entity, user: response[:user], errors: response[:errors] }
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       rescue StandardError => each

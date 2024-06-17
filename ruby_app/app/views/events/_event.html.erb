@@ -2,6 +2,13 @@
   <div>
     <h4>
       <%= event.title %>
+      <% if event.start_time <= Time.current() && event.end_time >= Time.current() %>
+        <span class="badge text-bg-success float-end" style="font-size: small">Ongoing</span>
+      <% elsif event.start_time > Time.current() %>
+        <span class="badge text-bg-primary float-end" style="font-size: small">Upcoming</span>
+      <% else %>
+        <span class="badge text-bg-secondary float-end" style="font-size: small">ended</span>
+      <% end %>
     </h4>
   </div>
   <div class="mb-3">

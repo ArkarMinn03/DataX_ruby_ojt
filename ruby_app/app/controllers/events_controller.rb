@@ -1,8 +1,9 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: %i[ show edit update destroy ]
+  before_action :set_event, only: %i[show edit update destroy]
+  before_action :set_users, only: %i[new create]
 
   def index
-    @events = Event.all.decorate
+    @events = Event.all.order('start_time').decorate
   end
 
   def show
@@ -11,8 +12,6 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @users = User.all.decorate
-    @guest_ids = []
   end
 
   def create
@@ -24,7 +23,7 @@ class EventsController < ApplicationController
           format.html { redirect_to events_path, notice: t("messages.common.create_success", data: "Event") }
         else
           flash[:errors] = response[:errors]
-          format.html { redirect_to new_event_path, status: :unprocessable_entity, event: response[:event], errors: response[:errors], alert: t("messages.common.create_fail", data: "Event") }
+          format.html { render :new, status: :unprocessable_entity, event: response[:event], errors: response[:errors], alert: t("messages.common.create_fail", data: "Event") }
         end
       rescue StandardError => errors
         logger.error "Something went wrong while creating event. #{ errors.message }"
@@ -73,5 +72,10 @@ class EventsController < ApplicationController
 
     def set_event
       @event = Event.find(params[:id]).decorate
+    end
+
+    def set_users
+      @users = User.all.order('first_name').decorate
+      @guest_ids = []
     end
 end

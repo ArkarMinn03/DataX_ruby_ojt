@@ -52,7 +52,9 @@ module Events
     end
 
     def guest_ids_check
-      if guest_ids.length == 1 && guest_ids[0] == ""
+      cleaned_guest_ids = guest_ids.reject(&:blank?)
+
+      if cleaned_guest_ids.empty?
         errors.add(:guest_ids, "There must be atleast one guest!")
       end
     end

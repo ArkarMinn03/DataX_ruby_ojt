@@ -1,3 +1,4 @@
+<% flash.discard %>
 <%= form_with(model: event, local: true) do |form| %>
   <div class="mb-3">
     <%= form.label t('labels.event.title'), class: "form-label" %>
@@ -71,85 +72,100 @@
   </div>
 
 <% end %>
+
 <script>
-  document.addEventListener('turbo:load', function () {
+  var startDateField = $('#startDatePart');
+  var startTimeField = $('#startTimePart');
+  var endDateField = $('#endDatePart');
+  var endTimeField = $('#endTimePart');
+
+  function padToTwoDigits(number) {
+    return number.toString().padStart(2, '0');
+  }
+
+  function addThirtyMinutes(startTime){
+    const time = startTime.split(":");
+
+    var endDateTime = new Date();
+    endDateTime.setHours(parseInt(time[0]));
+    endDateTime.setMinutes(parseInt(time[1]) + 30);
+
+    var endHours = padToTwoDigits(endDateTime.getHours());
+    var endMinutes = padToTwoDigits(endDateTime.getMinutes());
+    var formattedEndTime = `${endHours}:${endMinutes}`;
+
+    return formattedEndTime;
+  }
+
+  function updateEndDate() {
+    endDateField.val(startDateField.val())
+  }
+
+  function updateEndTime() {
+    endTimeField.val(addThirtyMinutes(startTimeField.val()));
+  }
+
+  function initializeSelect2() {
     $('#guests').select2({
-      placeholder: "Select Guests",
-      allowClear: true
+        placeholder: "Select Guests",
+        allowClear: true
+      });
+  }
+
+  startDateField.on('change', function() {
+    if (!endDateField.val() || endDateField.val() < startDateField.val()) {
+      updateEndDate();
+      updateEndTime();
+    }
+  })
+
+  startTimeField.on('change', function() {
+    if ((startDateField.val() == endDateField.val()) && (startTimeField.val() > endTimeField.val())) {
+      updateEndTime();
+    }
+  })
+
+  if(!startDateField.val()) {
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = padToTwoDigits(now.getMonth() + 1);
+    var day = padToTwoDigits(now.getDate());
+    var formattedDate = `${year}-${month}-${day}`;
+
+    startDateField.val(formattedDate);
+    endDateField.val(formattedDate);
+  }
+
+  if(!startTimeField.val()) {
+    const current = new Date();
+    current.setMinutes(current.getMinutes() + 10);
+
+    var currentHours = current.getHours();
+    var currentMinutes = current.getMinutes();
+
+    var startHours = padToTwoDigits(currentHours);
+    var startMinutes = padToTwoDigits(currentMinutes);
+    var formattedStartTime = `${startHours}:${startMinutes}`;
+
+    var formattedEndTime = addThirtyMinutes(formattedStartTime)
+
+    startTimeField.val(formattedStartTime)
+    endTimeField.val(formattedEndTime)
+  }
+
+  <% if flash[:errors].present? %>
+    $(document).ready(function() {
+      $('#guests').select2({
+        placeholder: "Select Guests",
+        allowClear: true
+      });
+    })
+  <% else %>
+    document.addEventListener('turbo:load', function () {
+      $('#guests').select2({
+        placeholder: "Select Guests",
+        allowClear: true
+      });
     });
-
-    var startDateField = $('#startDatePart');
-    var startTimeField = $('#startTimePart');
-    var endDateField = $('#endDatePart');
-    var endTimeField = $('#endTimePart');
-
-    function padToTwoDigits(number) {
-      return number.toString().padStart(2, '0');
-    }
-
-    function addThirtyMinutes(startTime){
-      const time = startTime.split(":");
-
-      var endDateTime = new Date();
-      endDateTime.setHours(parseInt(time[0]));
-      endDateTime.setMinutes(parseInt(time[1]) + 30);
-
-      var endHours = padToTwoDigits(endDateTime.getHours());
-      var endMinutes = padToTwoDigits(endDateTime.getMinutes());
-      var formattedEndTime = `${endHours}:${endMinutes}`;
-
-      return formattedEndTime;
-    }
-
-    function updateEndDate() {
-      endDateField.val(startDateField.val())
-    }
-
-    function updateEndTime() {
-      endTimeField.val(addThirtyMinutes(startTimeField.val()));
-    }
-
-
-    startDateField.on('change', function() {
-      if (!endDateField.val() || endDateField.val() < startDateField.val()) {
-        updateEndDate();
-        updateEndTime();
-      }
-    })
-
-    startTimeField.on('change', function() {
-      if ((startDateField.val() == endDateField.val()) && (startTimeField.val() > endTimeField.val())) {
-        updateEndTime();
-      }
-    })
-
-    if(!startDateField.val()) {
-      var now = new Date();
-      var year = now.getFullYear();
-      var month = padToTwoDigits(now.getMonth() + 1);
-      var day = padToTwoDigits(now.getDate());
-      var formattedDate = `${year}-${month}-${day}`;
-
-      startDateField.val(formattedDate);
-      endDateField.val(formattedDate);
-    }
-
-    if(!startTimeField.val()) {
-      const current = new Date();
-      current.setMinutes(current.getMinutes() + 10);
-
-      var currentHours = current.getHours();
-      var currentMinutes = current.getMinutes();
-
-      var startHours = padToTwoDigits(currentHours);
-      var startMinutes = padToTwoDigits(currentMinutes);
-      var formattedStartTime = `${startHours}:${startMinutes}`;
-
-      var formattedEndTime = addThirtyMinutes(formattedStartTime)
-
-      startTimeField.val(formattedStartTime)
-      endTimeField.val(formattedEndTime)
-    }
-
-  });
+  <% end %>
 </script>

@@ -1,3 +1,4 @@
+<% flash.discard %>
 <%= form_with(model: user, local: true) do |form| %>
   <div class="mb-3">
     <%= form.label t('labels.user.first_name'), class: "form-label" %>
@@ -51,11 +52,13 @@
       <%= form.radio_button :gender, 1, id: 'female' %>
       <label for="female">Female</label>
     </div>
-    <% if flash[:errors].present? && flash[:errors]["gender"].present? %>
-      <% flash[:errors]["gender"].each do |error| %>
-        <span class="text-danger"><%= error %></span>
+    <div>
+      <% if flash[:errors].present? && flash[:errors]["gender"].present? %>
+        <% flash[:errors]["gender"].each do |error| %>
+          <span class="text-danger"><%= error %></span>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 
   <div class="mb-3">

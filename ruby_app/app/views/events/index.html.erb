@@ -5,7 +5,19 @@
     </div>
   <% end %>
 
-  <h3 class="text-center mb-4">Events</h3>
+  <div class="position-relative">
+    <div class="z-1 position-absolute end-0">
+      <select class="form-select" id="statusSelector">
+        <option value="">Default</option>
+        <option value="All">All</option>
+        <option value="Ongoing">Ongoing</option>
+        <option value="Ended">Ended</option>
+      </select>
+    </div>
+    <h3 class="text-center mb-4">
+      <span id="statusIdentifier"></span> Events
+    </h3>
+  </div>
   <% @events.each do |event| %>
     <div class="row mb-3">
       <div class="card">
@@ -19,3 +31,12 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  var statusSelector = $('#statusSelector');
+  var statusIdentifier = $('#statusIdentifier');
+
+  statusSelector.on('change', function() {
+    statusIdentifier.text(statusSelector.val())
+  })
+</script>
