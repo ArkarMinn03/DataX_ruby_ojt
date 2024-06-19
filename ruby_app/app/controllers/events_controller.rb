@@ -28,7 +28,7 @@ class EventsController < ApplicationController
           format.html { render :new, status: :unprocessable_entity, errors: response[:errors]}
         end
       rescue StandardError => errors
-        logger.error "Something went wrong while creating event. #{ errors.message }"
+        logger.error "Something went wrong while creating the event. #{ errors.message }"
         format.html { render file: "#{ Rails.root }/public/500.html", layout: true, status: :internal_server_error }
       end
     end
