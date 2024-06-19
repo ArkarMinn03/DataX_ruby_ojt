@@ -2,7 +2,7 @@
 <%= form_with(model: user, local: true) do |form| %>
   <div class="mb-3">
     <%= form.label t('labels.user.first_name'), class: "form-label" %>
-    <%= form.text_field :first_name, class: "form-control"  %>
+    <%= form.text_field :first_name, class: "form-control", required: true %>
     <% if flash[:errors].present? && flash[:errors]["first_name"].present? %>
       <% flash[:errors]["first_name"].each do |error| %>
         <span class="text-danger"><%= error %></span>
@@ -12,7 +12,7 @@
 
   <div class="mb-3">
     <%= form.label t('labels.user.last_name'), class: "form-label" %>
-    <%= form.text_field :last_name, class: "form-control" %>
+    <%= form.text_field :last_name, class: "form-control", required: true %>
     <% if flash[:errors].present? && flash[:errors]["last_name"].present? %>
       <% flash[:errors]["last_name"].each do |error| %>
         <span class="text-danger"><%= error %></span>
@@ -22,7 +22,7 @@
 
   <div class="mb-3">
     <%= form.label t('labels.user.email'), class: "form-label" %>
-    <%= form.text_field :email, class: "form-control" %>
+    <%= form.text_field :email, class: "form-control", required: true %>
     <% if flash[:errors].present? && flash[:errors]["email"].present? %>
       <% flash[:errors]["email"].each do |error| %>
         <span class="text-danger"><%= error %></span>
@@ -33,7 +33,7 @@
   <% if local_assigns[:form_type] == :new %>
     <div class="mb-3">
       <%= form.label t('labels.user.encrypted_password'), class: "form-label" %>
-      <%= form.password_field :encrypted_password, class: "form-control" %>
+      <%= form.password_field :encrypted_password, class: "form-control", required: true %>
       <% if flash[:errors].present? && flash[:errors]["encrypted_password"].present? %>
         <% flash[:errors]["encrypted_password"].each do |error| %>
           <span class="text-danger"><%= error %></span>

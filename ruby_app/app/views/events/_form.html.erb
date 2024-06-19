@@ -2,7 +2,7 @@
 <%= form_with(model: event, local: true) do |form| %>
   <div class="mb-3">
     <%= form.label t('labels.event.title'), class: "form-label" %>
-    <%= form.text_field :title, class: "form-control" %>
+    <%= form.text_field :title, class: "form-control", required: true %>
     <% if flash[:errors].present? && flash[:errors]["title"].present? %>
       <% flash[:errors]["title"].each do |error| %>
         <span style="color: red; display: block;"><%= error %></span>
@@ -15,10 +15,10 @@
         <%= form.label t('labels.event.start_time'), class: "form-label" %>
         <div class="row">
           <div class="col">
-            <%= form.date_field :start_date_part, id: "startDatePart", class: "form-control" %>
+            <%= form.date_field :start_date_part, id: "startDatePart", class: "form-control", required: true %>
           </div>
           <div class="col">
-            <%= form.time_field :start_time_part, id: "startTimePart", class: "form-control" %>
+            <%= form.time_field :start_time_part, id: "startTimePart", class: "form-control", required: true %>
           </div>
         </div>
         <% if flash[:errors].present? && flash[:errors]["start_time"].present? %>
@@ -31,10 +31,10 @@
         <%= form.label t('labels.event.end_time'), class: "form-label" %>
         <div class="row">
           <div class="col">
-            <%= form.date_field :end_date_part, id: "endDatePart", class: "form-control" %>
+            <%= form.date_field :end_date_part, id: "endDatePart", class: "form-control", required: true %>
           </div>
           <div class="col">
-            <%= form.time_field :end_time_part, id: "endTimePart", class: "form-control" %>
+            <%= form.time_field :end_time_part, id: "endTimePart", class: "form-control", required: true %>
           </div>
         </div>
         <% if flash[:errors].present? && flash[:errors]["end_time"].present? %>
@@ -47,7 +47,7 @@
   </div>
   <div class="mb-3">
     <%= form.label t('labels.event.description'), class: "form-label" %>
-    <%= form.text_area :description, class: "form-control" %>
+    <%= form.text_area :description, class: "form-control", required: true %>
     <% if flash[:errors].present? && flash[:errors]["description"].present? %>
       <% flash[:errors]["description"].each do |error| %>
         <span style="color: red; display: block;"><%= error %></span>
@@ -56,7 +56,7 @@
   </div>
   <div class="mb-3">
     <%= form.label t('labels.event.guests'), class: "form-label"  %>
-    <%= form.collection_select :guest_ids, users, :id, :full_name, { selected: @guest_ids }, { id: "guests", multiple: true, class: "form-control" } %>
+    <%= form.collection_select :guest_ids, users, :id, :full_name, { selected: @guest_ids }, { id: "guests", multiple: true, class: "form-control", required: true } %>
     <% if flash[:errors].present? && flash[:errors]["guest_ids"].present? %>
       <% flash[:errors]["guest_ids"].each do |error| %>
         <span style="color: red; display: block;"><%= error %></span>

@@ -23,7 +23,9 @@ class UsersController < ApplicationController
           format.json { render :index, status: :ok, location: @user }
         else
           flash[:errors] = response[:errors]
-          format.html { render :new, status: :unprocessable_entity, user: response[:user], errors: response[:errors] }
+          @user = response[:user]
+          flash[:alert] = t("messages.common.create_fail", data: "User")
+          format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       rescue StandardError => each
