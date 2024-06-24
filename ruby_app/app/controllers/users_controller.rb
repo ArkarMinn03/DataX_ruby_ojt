@@ -41,7 +41,8 @@ class UsersController < ApplicationController
   def update
     updated_user = Users::UserUsecase.new(user_params)
     respond_to do |format|
-      if (updated_user.update(@user))
+      response = updated_user.update(@user)
+      if response[:status] == :updated
         format.html { redirect_to @user, notice: t('messages.common.update_success', data: "User") }
         format.json { render :show, status: :ok, location: @user }
       else

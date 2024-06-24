@@ -23,8 +23,6 @@ class Api::UsersController < Api::ApplicationController
   end
 
   def update
-    # @user = User.find(params[:id])
-    # byebug
     update_user = Users::UserUsecase.new(user_params)
     response = update_user.update(@user)
     if response[:status] == :updated
