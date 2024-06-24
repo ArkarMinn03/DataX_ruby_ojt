@@ -33,6 +33,29 @@ module Events
       end
     end
 
+    def export_all(events)
+      csv_data = CSV.generate(headers: true) do |csv|
+        csv << ["ID", "Title", "Description", "Start_time", "End_time", "guests"]
+        events.each do |event|
+          guest_names = get_guest_names(event)
+
+          csv << [event.id, event.title, event.description, event.start_time.strftime("%Y-%m-%d %H:%M"), event.end_time.strftime("%Y-%m-%d %H:%M"), guest_names]
+        end
+      end
+
+      return csv_data
+    end
+
+    def export(event)
+      csv_data = CSV.generate(headers: true) do |csv|
+        csv << ["ID", "Title", "Description", "Start_time", "End_time", "guests"]
+        guest_names = get_guest_names(event)
+        csv << [event.id, event.title, event.description, event.start_time.strftime("%Y-%m-%d %H:%M"), event.end_time.strftime("%Y-%m-%d %H:%M"), guest_names]
+      end
+
+      return csv_data
+    end
+
     private
       def create_google_events(event, guest_ids)
         event_guest_ids = guest_ids.map do |guest_id|
@@ -99,6 +122,16 @@ module Events
             calendar_delete_service.delete_event(guest.google_event_id)
           end
         end
+      end
+
+      def get_guest_names(event)
+        guest_name_array = []
+
+        event.event_guests.each do |guest|
+          guest_name_array << guest.user.decorate.full_name
+        end
+
+        guest_names = guest_name_array.join(", ")
       end
   end
 end

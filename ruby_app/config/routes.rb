@@ -9,6 +9,11 @@ Rails.application.routes.draw do
 
   resources :events do
     resources :event_guests
+    collection do
+      get :export_all
+      post :import
+    end
+    get :export
   end
 
   get 'auth/:provider/callback', to: "sessions#googleAuth"

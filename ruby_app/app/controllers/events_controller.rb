@@ -1,3 +1,5 @@
+require 'csv'
+
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy]
   before_action :set_users, only: %i[new create]
@@ -8,6 +10,28 @@ class EventsController < ApplicationController
 
   def show
     @users = User.all.decorate
+  end
+
+  def export_all
+    @events = Event.all
+    export_all_service = Events::EventService.new(nil)
+    csv_data = export_all_service.export_all(@events)
+
+    respond_to do |format|
+      format.csv do
+        send_data csv_data, filename: 'events.csv', type: 'text/csv'
+      end
+    end
+  end
+
+  def export
+    @event = Event.find(params[:event_id])
+    event_export_service = Events::EventService.new(nil)
+    csv_data = event_export_service.export(@event)
+
+    respond_to do |format|
+      format.csv { send_data csv_data, filename: "event_#{@event.title}.csv", type: "text/csv" }
+    end
   end
 
   def new
