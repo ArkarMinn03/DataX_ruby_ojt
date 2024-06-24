@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     user.update(
       google_token: auth.credentials.token,
       google_refresh_token: auth.credentials.refresh_token,
-      expired_at: Time.current + auth.credentials.expires_in.to_i.seconds
+      expired_at: Time.at(auth.credentials.expires_at)
     )
     redirect_to user_path(user), notice: "Google account connected successfully!!"
   end
