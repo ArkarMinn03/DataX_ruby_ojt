@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
   let(:user_id) { 1 }
+
   describe "GET /users" do
     before { get '/users' }
 
@@ -217,7 +218,6 @@ RSpec.describe "Users", type: :request do
 
       it "redirect to users index page" do
         expect(response).to redirect_to(users_path)
-        # follow_redirect!
         expect(response).to have_http_status(:found)
       end
 

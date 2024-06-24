@@ -46,10 +46,18 @@ class EventsController < ApplicationController
   def update
     update_event = Events::EventUsecase.new(event_params)
     respond_to do |format|
-      if (update_event.update(@event))
+      response = update_event.update(@event)
+      if response[:status] == :updated
         format.html { redirect_to @event, notice: t('messages.common.update_success', data: "Event") }
         format.json { render :show, status: :ok, location: @event }
       else
+        @event.start_date_part = @event.start_time.to_date
+        @event.start_time_part = @event.start_time.strftime('%H:%M')
+        @event.end_date_part = @event.end_time.to_date
+        @event.end_time_part = @event.end_time.strftime('%H:%M')
+        @users = User.all.decorate
+        @guest_ids = @event.event_guests.pluck(:user_id)
+        flash.now[:alert] = t('messages.common.update_fail', data: "Event")
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
