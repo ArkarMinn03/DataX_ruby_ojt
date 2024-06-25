@@ -12,6 +12,12 @@ class EventsController < ApplicationController
     @users = User.all.decorate
   end
 
+  def import
+    file = params[:file]
+    csv_import_usecase = CsvUsecase.new(file)
+    csv_import_usecase.import
+  end
+
   def export_all
     @events = Event.all
     export_all_service = Events::EventService.new(nil)

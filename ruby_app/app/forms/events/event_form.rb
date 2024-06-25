@@ -6,10 +6,10 @@ module Events
 
     attribute :title, String
     attribute :description, String
-    attribute :start_date_part, Date
-    attribute :start_time_part, Time
-    attribute :end_date_part, Date
-    attribute :end_time_part, Time
+    attribute :start_date_part, String
+    attribute :start_time_part, String
+    attribute :end_date_part, String
+    attribute :end_time_part, String
     attribute :guest_ids, Array
 
     validates :title, presence: { message: "Event title cannot be empty" }
@@ -19,7 +19,6 @@ module Events
     validate :guest_ids_check
     validate :start_time_check
     validate :end_time_check
-    # validates :end_time_check, presence: { message: "End time Must be after Start time"}
 
     def start_time
       if @start_date_part.present? && @start_time_part.present?
