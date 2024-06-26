@@ -1,17 +1,33 @@
 class CsvService
-  def initialize (params)
-    @params = params
+  def initialize (records)
+    @records = records
   end
 
-  def self.import(records)
-    Event.import(records, recursive: true)
+  def import
+    event_records = []
+    guest_records = []
+
+    @records.each do |record|
+      event = to_model(record)
+      event_records << event
+      add_guests_records(guest_records, event, record[:guest_ids])
+    end
+
+    Event.import(event_records, recursive: true)
+
+    imported_events_IDs = Event.where(title: event_records.map(&:title)).group(:title).maximum(:id).values
+    imported_events = Event.where(id: imported_events_IDs)
+
+    guest_records.each do |guest_record|
+      imported_event = imported_events.find { |e| e.title == guest_record[:event].title }
+      guest_record[:event_id] = imported_event.id if imported_event
+    end
+    EventGuest.import(guest_records.map{ |record| EventGuest.new(record) })
   end
 
-  def to_model
-    event = Event.new(@params.except(:guest_ids))
+  def to_model(params)
+    event = Event.new(params.except(:guest_ids))
     event.combine_date_time
-
-    # create_google_events(event, @params[:guest_ids])
 
     return event
   end
