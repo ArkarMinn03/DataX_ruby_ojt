@@ -20,8 +20,6 @@ class CsvUsecase < BaseUsecase
             event = csv_service.to_model
             event_records << event
             csv_service.add_guests_records(guests_records, event, params[:guest_ids])
-          else
-            return { errors: @form.errors, status: :unprocessable_entity }
           end
         end
 
@@ -30,6 +28,7 @@ class CsvUsecase < BaseUsecase
         imported_events_IDs = Event.where(title: event_records.map(&:title)).group(:title).maximum(:id).values
 
         imported_events = Event.where(id: imported_events_IDs)
+        byebug
 
         guests_records.each do |guest_record|
           imported_event = imported_events.find { |e| e.title == guest_record[:event].title }
@@ -37,7 +36,7 @@ class CsvUsecase < BaseUsecase
         end
 
         EventGuest.import(guests_records.map{ |record| EventGuest.new(record) })
-
+        return { status: :ok, notice: "Imported success." }
       rescue StandardError => error
         return { errors: error.message, status: :unprocessable_entity }
       end

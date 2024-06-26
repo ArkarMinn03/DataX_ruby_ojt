@@ -15,7 +15,10 @@ class EventsController < ApplicationController
   def import
     file = params[:file]
     csv_import_usecase = CsvUsecase.new(file)
-    csv_import_usecase.import
+    response = csv_import_usecase.import
+    if response[:status] == :ok
+      redirect_to events_path, notice: "Events imported success!"
+    end
   end
 
   def export_all

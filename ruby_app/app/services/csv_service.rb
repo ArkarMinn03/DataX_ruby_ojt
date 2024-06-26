@@ -18,12 +18,14 @@ class CsvService
 
   def add_guests_records(guest_records, event, guest_ids)
     guest_ids.each do |guest_id|
-      if guest_id != "" && User.find(guest_id).google_token.present?
-        google_event_id = create_google_event(event, guest_id)
-      else
-        google_event_id = nil
+      if User.exists?(guest_id)
+        if User.find(guest_id).google_token.present?
+          google_event_id = create_google_event(event, guest_id)
+        else
+          google_event_id = nil
+        end
+        guest_records << { user_id: guest_id, event: event, google_event_id: google_event_id }
       end
-      guest_records << { user_id: guest_id, event: event, google_event_id: google_event_id }
     end
   end
 
