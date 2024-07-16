@@ -1,6 +1,8 @@
 require 'rails_helper'
+require_relative '../support/shared_contexts/google_calendar_api_mock'
 
 RSpec.describe "Events", type: :request do
+  include_context "Google calendar Api Mock"
   let(:user_id) { "163" }
   let(:test_date) { (DateTime.current().to_date + 2).strftime("%Y-%m-%d") }
 
@@ -8,6 +10,17 @@ RSpec.describe "Events", type: :request do
     it "return all events with status ok" do
       get events_path
       expect(response).to have_http_status(:ok)
+    end
+
+    it "return all events on google clanedar" do
+      client = Google::Apis::CalendarV3::CalendarService.new
+
+      event_list = client.list_events("primary")
+      byebug
+      event_count = event_list.items.count
+
+      expect(event_count).to eq(2)
+      expect(event_list.first[:summary]).to eq("Test Event 1")
     end
   end
 
